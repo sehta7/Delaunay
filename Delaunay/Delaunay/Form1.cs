@@ -14,17 +14,26 @@ namespace Delaunay
     {
         Bitmap bitmap;
         Graphics graphics;
+        List<Point> list;
 
         public Form1()
         {
             InitializeComponent();
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             graphics = Graphics.FromImage(bitmap);
+            list = new List<Point>();
         }
 
+        //drawing random points on picturebox - number of points enter by user
         private void button1_Click(object sender, EventArgs e)
         {
-            Draw_Service.drawRandomPoints(bitmap, graphics, pictureBox1, Int32.Parse(textBox1.Text), pictureBox1.Size.Width, pictureBox1.Size.Height);
+            list = Draw_Service.drawRandomPoints(bitmap, graphics, pictureBox1, Int32.Parse(textBox1.Text), pictureBox1.Size.Width, pictureBox1.Size.Height);
+        }
+
+        //drawing Delaunay triangulation
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
