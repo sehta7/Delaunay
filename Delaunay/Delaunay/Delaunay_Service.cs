@@ -30,7 +30,12 @@ namespace Delaunay
                 {
                     if (Geometry_Service.isInsideCircle(list[i], triangleList[j]) == true)
                     {
-
+                        //add three edges of triangle which has point inside and remove it from list of triangles
+                        edgeList.Add(new Edge(triangleList[j].p1, triangleList[j].p2));
+                        edgeList.Add(new Edge(triangleList[j].p2, triangleList[j].p3));
+                        edgeList.Add(new Edge(triangleList[j].p3, triangleList[j].p1));
+                        triangleList.RemoveAt(j);
+                        j--;
                     }
                 }
             }
