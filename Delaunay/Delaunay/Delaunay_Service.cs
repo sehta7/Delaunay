@@ -10,7 +10,7 @@ namespace Delaunay
     class Delaunay_Service
     {
         //algorithm of Bowyer-Watson to make Delaunay triangulation
-        public void BowyerWatsonAlgorithm(List<PointF> list)
+        public static List<Triangle> BowyerWatsonAlgorithm(List<PointF> list)
         {
             //list of triangles
             List<Triangle> triangleList = new List<Triangle>();
@@ -18,6 +18,8 @@ namespace Delaunay
             //find super triangle and add it to list
             Triangle superTriangle = Geometry_Service.superTriangle(list);
             triangleList.Add(superTriangle);
+
+            return triangleList;
         }
     }
 }

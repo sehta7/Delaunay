@@ -30,5 +30,20 @@ namespace Delaunay
             //return list of poitns
             return list;
         }
+
+        public static void drawTriangle(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<Triangle> list)
+        {
+            foreach (var triangle in list)
+            {
+                graphics.DrawRectangle(new Pen(Color.Red), triangle.p1.X, triangle.p1.Y, 1, 1);
+                graphics.DrawRectangle(new Pen(Color.Red), triangle.p2.X, triangle.p2.Y, 1, 1);
+                graphics.DrawRectangle(new Pen(Color.Red), triangle.p3.X, triangle.p3.Y, 1, 1);
+
+                graphics.DrawLine(new Pen(Color.Red), triangle.p1, triangle.p2);
+                graphics.DrawLine(new Pen(Color.Red), triangle.p2, triangle.p3);
+                graphics.DrawLine(new Pen(Color.Red), triangle.p3, triangle.p1);
+            }
+            pictureBox.Image = bitmap;
+        }
     }
 }
