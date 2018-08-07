@@ -38,6 +38,21 @@ namespace Delaunay
                         j--;
                     }
                 }
+
+                //remove repeating edges from list
+                for (int j = 0; j < edgeList.Count - 1; j++)
+                {
+                    for (int k = 0; k < edgeList.Count - 2; k++)
+                    {
+                        if (edgeList[j].Equals(edgeList[k]))
+                        {
+                            edgeList.RemoveAt(j);
+                            edgeList.RemoveAt(k);
+                            k--;
+                            continue;
+                        }
+                    }
+                }
             }
 
             return triangleList;
