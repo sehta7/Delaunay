@@ -40,9 +40,9 @@ namespace Delaunay
                 }
 
                 //remove repeating edges from list
-                for (int j = 0; j < edgeList.Count - 1; j++)
+                for (int j = edgeList.Count - 2; j >= 0; j--)
                 {
-                    for (int k = 0; k < edgeList.Count - 2; k++)
+                    for (int k = edgeList.Count - 1; k >= j + 1; k--)
                     {
                         if (edgeList[j].Equals(edgeList[k]))
                         {
@@ -64,8 +64,6 @@ namespace Delaunay
                 edgeList.Clear();
                 edgeList = null;
             }
-
-
 
             return triangleList;
         }
