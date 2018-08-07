@@ -14,14 +14,14 @@ namespace Delaunay
     {
         Bitmap bitmap;
         Graphics graphics;
-        List<Point> list;
+        List<PointF> list;
 
         public Form1()
         {
             InitializeComponent();
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             graphics = Graphics.FromImage(bitmap);
-            list = new List<Point>();
+            list = new List<PointF>();
         }
 
         //drawing random points on picturebox - number of points enter by user
