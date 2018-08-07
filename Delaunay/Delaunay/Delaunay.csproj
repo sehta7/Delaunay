@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Delaunay_Service.cs" />
     <Compile Include="Draw_Service.cs" />
+    <Compile Include="Edge.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
