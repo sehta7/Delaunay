@@ -53,7 +53,19 @@ namespace Delaunay
                         }
                     }
                 }
+
+                //create new triangle for every edge
+                for (int j = 0; j < edgeList.Count; j++)
+                {
+                    //new triangle with points of edge and checking point
+                    triangleList.Add(new Triangle(edgeList[j].p1, edgeList[j].p2, list[i]));
+                }
+                //clear edge list
+                edgeList.Clear();
+                edgeList = null;
             }
+
+
 
             return triangleList;
         }
