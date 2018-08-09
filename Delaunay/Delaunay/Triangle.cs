@@ -25,5 +25,26 @@ namespace Delaunay
             this.p2 = p2;
             this.p3 = p3;
         }
+
+        //checks if given triangle has common vertices with supertriangle
+        public static bool belongsToSupertriangle(Triangle supertriangle, Triangle triangle)
+        {
+            bool belong = false;
+
+            if (supertriangle.p1.Equals(triangle.p1) ||
+                supertriangle.p1.Equals(triangle.p2) ||
+                supertriangle.p1.Equals(triangle.p3) ||
+                supertriangle.p2.Equals(triangle.p1) ||
+                supertriangle.p2.Equals(triangle.p2) ||
+                supertriangle.p2.Equals(triangle.p3) ||
+                supertriangle.p3.Equals(triangle.p1) ||
+                supertriangle.p3.Equals(triangle.p2) ||
+                supertriangle.p3.Equals(triangle.p3))
+            {
+                belong = true;
+            }
+
+            return belong;
+        }
     }
 }
