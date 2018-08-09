@@ -18,6 +18,9 @@ namespace Delaunay
             //find super triangle and add it to list
             Triangle superTriangle = Geometry_Service.superTriangle(list);
             triangleList.Add(superTriangle);
+            list.Add(superTriangle.p1);
+            list.Add(superTriangle.p2);
+            list.Add(superTriangle.p3);
 
             //checking each point in list
             for (int i = 0; i < list.Count; i++)
@@ -38,16 +41,17 @@ namespace Delaunay
                         j--;
                     }
                 }
+                if (i >= list.Count) continue;
 
                 //remove repeating edges from list
                 for (int j = edgeList.Count - 2; j >= 0; j--)
                 {
                     for (int k = edgeList.Count - 1; k >= j + 1; k--)
                     {
-                        if (edgeList[j].Equals(edgeList[k]))
+                        if (Edge.areTheSame(edgeList[j], edgeList[k]))
                         {
-                            edgeList.RemoveAt(j);
                             edgeList.RemoveAt(k);
+                            edgeList.RemoveAt(j);
                             k--;
                             continue;
                         }
@@ -63,6 +67,15 @@ namespace Delaunay
                 //clear edge list
                 edgeList.Clear();
                 edgeList = null;
+            }
+            
+            //remove triangles with vertices of super triangle
+            for (int i = triangleList.Count - 1; i >= 0; i--)
+            {
+                if (Triangle.belongsToSupertriangle(superTriangle, triangleList[i]))
+                {
+                    triangleList.RemoveAt(i);
+                }
             }
 
             return triangleList;
