@@ -75,9 +75,31 @@ namespace Delaunay
             float a4 = -1 / a3;
             float b4 = p2Mid.Y - p2Mid.X * a4;
 
-            //coordinates of circle center
-            float x = (b4 - b2) / (a2 - a4);
-            float y = a2 * x + b2;
+            //eqation of line for points p3 and p1
+            float a5 = (triangle.p3.Y - triangle.p1.Y) / (triangle.p3.X - triangle.p1.X);
+            float b5 = triangle.p3.Y - triangle.p3.X * a5;
+            //equation of bisector on p1p2
+            PointF p3Mid = new PointF(((triangle.p3.X + triangle.p1.X) * 0.5f), ((triangle.p3.Y + triangle.p1.Y) * 0.5f));
+            float a6 = -1 / a5;
+            float b6 = p3Mid.Y - p3Mid.X * a6;
+
+            //coordinates of circle center (only when line are't parallel to axis)
+            float x = 0, y = 0;
+            if (!float.IsInfinity(a2) && !float.IsInfinity(a4))
+            {
+                x = (b4 - b2) / (a2 - a4);
+                y = a2 * x + b2;
+            }
+            else if (!float.IsInfinity(a4) && !float.IsInfinity(a6))
+            {
+                x = (b6 - b4) / (a4 - a6);
+                y = a4 * x + b4;
+            }
+            else if (!float.IsInfinity(a6) && !float.IsInfinity(a2))
+            {
+                x = (b2 - b6) / (a6 - a2);
+                y = a6 * x + b6;
+            }
 
             //count the distance between circle center and point
             float d = (float)Math.Sqrt(Math.Pow((toCheck.X - x), 2) + Math.Pow((toCheck.Y - y), 2));
@@ -85,8 +107,9 @@ namespace Delaunay
             float ab = (float)Math.Sqrt(Math.Pow((triangle.p1.X - triangle.p2.X), 2) + Math.Pow((triangle.p1.Y - triangle.p2.Y), 2));
             float bc = (float)Math.Sqrt(Math.Pow((triangle.p2.X - triangle.p3.X), 2) + Math.Pow((triangle.p2.Y - triangle.p3.Y), 2));
             float ca = (float)Math.Sqrt(Math.Pow((triangle.p3.X - triangle.p1.X), 2) + Math.Pow((triangle.p3.Y - triangle.p1.Y), 2));
-            float circuit = ab + bc + ca;
-            float r = (ab * bc * ca) / 4 * circuit;
+            float circuit = (ab + bc + ca) / 2;
+            float area = (float)Math.Sqrt(circuit * (circuit - ab) * (circuit - bc) * (circuit - ca));
+            float r = (ab * bc * ca) / (4 * area);
 
             //check if point is inside the circle with center in (x,y)
             if (d < r)
