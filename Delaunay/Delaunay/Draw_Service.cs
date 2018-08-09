@@ -23,7 +23,7 @@ namespace Delaunay
                 int y = random.Next(0, height);
                 list.Add(new PointF(x, y));
 
-                graphics.DrawRectangle(new Pen(Color.Black), x, y, 1, 1);
+                graphics.DrawRectangle(new Pen(Color.Black), x, y, 3, 3);
             }
             pictureBox.Image = bitmap;
 
@@ -31,14 +31,11 @@ namespace Delaunay
             return list;
         }
 
+        //draw final triangles of Delaunay triangulation
         public static void drawTriangle(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<Triangle> list)
         {
             foreach (var triangle in list)
             {
-                /*graphics.DrawRectangle(new Pen(Color.Red), triangle.p1.X, triangle.p1.Y, 1, 1);
-                graphics.DrawRectangle(new Pen(Color.Red), triangle.p2.X, triangle.p2.Y, 1, 1);
-                graphics.DrawRectangle(new Pen(Color.Red), triangle.p3.X, triangle.p3.Y, 1, 1);*/
-
                 graphics.DrawLine(new Pen(Color.Red), triangle.p1, triangle.p2);
                 graphics.DrawLine(new Pen(Color.Red), triangle.p2, triangle.p3);
                 graphics.DrawLine(new Pen(Color.Red), triangle.p3, triangle.p1);
