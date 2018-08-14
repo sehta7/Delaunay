@@ -16,6 +16,7 @@ namespace Delaunay
         Graphics graphics;
         List<PointF> pointList;
         List<Triangle> triangleList;
+        List<Edge> VoronoiDiagram;
 
         public Form1()
         {
@@ -23,6 +24,7 @@ namespace Delaunay
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             graphics = Graphics.FromImage(bitmap);
             pointList = new List<PointF>();
+            VoronoiDiagram = new List<Edge>();
         }
 
         //drawing random points on picturebox - number of points enter by user
@@ -40,7 +42,8 @@ namespace Delaunay
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList);
+            Draw_Service.drawDiagram(bitmap, graphics, pictureBox1, VoronoiDiagram);
         }
     }
 }
