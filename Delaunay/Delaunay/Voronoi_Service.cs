@@ -26,7 +26,6 @@ namespace Delaunay
                     }
                 }
             }
-
             return edgeList;
         }
     }
