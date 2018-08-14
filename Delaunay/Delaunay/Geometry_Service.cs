@@ -61,12 +61,18 @@ namespace Delaunay
             //finds bisectors of the sides of the triangle
             float a1, b1;
             findBisector(triangle.p1, triangle.p2, out a1, out b1);
+            triangle.a1 = a1;
+            triangle.b1 = b1;
 
             float a2, b2;
             findBisector(triangle.p2, triangle.p3, out a2, out b2);
+            triangle.a2 = a2;
+            triangle.b2 = b2;
 
             float a3, b3;
             findBisector(triangle.p3, triangle.p1, out a3, out b3);
+            triangle.a3 = a3;
+            triangle.b3 = b3;
 
             //coordinates of circle center (only when line are't parallel to axis)
             float x = 0, y = 0;
@@ -85,6 +91,8 @@ namespace Delaunay
                 x = (b2 - b3) / (a3 - a2);
                 y = a3 * x + b3;
             }
+            triangle.circumcenter.X = x;
+            triangle.circumcenter.Y = y;
 
             //count the distance between circle center and point
             float d = (float)Math.Sqrt(Math.Pow((toCheck.X - x), 2) + Math.Pow((toCheck.Y - y), 2));
@@ -118,6 +126,13 @@ namespace Delaunay
             PointF mid = new PointF(((p1.X + p2.X) * 0.5f), ((p1.Y + p2.Y) * 0.5f));
             a2 = -1 / a1;
             b2 = mid.Y - mid.X * a2;
+        }
+
+        //returns common point of two bisectors
+        public static void intersectPoint(float a1, float b1, float a2, float b2, out float x, out float y)
+        {
+            x = (b2 - b1) / (a1 - a2);
+            y = a1 * x + b1;
         }
     }
 }
