@@ -37,13 +37,21 @@ namespace Delaunay
         private void button2_Click(object sender, EventArgs e)
         {
             triangleList = Delaunay_Service.BowyerWatsonAlgorithm(pointList);
-            Draw_Service.drawTriangle(bitmap, graphics, pictureBox1, triangleList);
+            //Draw_Service.drawTriangle(bitmap, graphics, pictureBox1, triangleList);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList);
             Draw_Service.drawDiagram(bitmap, graphics, pictureBox1, VoronoiDiagram);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //clear button
+            pictureBox1.Image = null;
+            bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            graphics = Graphics.FromImage(bitmap);
         }
     }
 }
