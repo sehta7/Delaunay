@@ -15,18 +15,14 @@ namespace Delaunay
         {
             //list of Voronoi diagram edges
             List<Edge> edgeList = new List<Edge>();
-            List<float> bisectorList = new List<float>();
 
             foreach (var triangle in trianglesList)
             {
                 for (int i = 0; i < trianglesList.Count; i++)
                 {
-                    float x, y;
-                    if (triangle.a1 != trianglesList[i].a1)
+                    if (Triangle.commonSide(triangle, trianglesList[i]))
                     {
-                        Geometry_Service.intersectPoint(triangle.a1, triangle.b1, trianglesList[i].a1, trianglesList[i].b1, out x, out y);
-                        PointF intersect = new PointF(x, y);
-                        edgeList.Add(new Edge(intersect, triangle.circumcenter));
+                        edgeList.Add(new Edge(triangle.circumcenter, trianglesList[i].circumcenter));
                     }
                 }
             }
