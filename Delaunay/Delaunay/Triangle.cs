@@ -10,9 +10,22 @@ namespace Delaunay
     //class to store information about triangles
     class Triangle
     {
+        //points of triangle vertices
         public PointF p1;
         public PointF p2;
         public PointF p3;
+        //circumcenter of triangle
+        public PointF circumcenter;
+        //coefficients of each side bisector
+        //p1p2
+        public float a1;
+        public float b1;
+        //p2p3
+        public float a2;
+        public float b2;
+        //p3p1
+        public float a3;
+        public float b3;
 
         public Triangle()
         {
