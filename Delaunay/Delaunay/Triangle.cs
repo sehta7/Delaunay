@@ -59,5 +59,26 @@ namespace Delaunay
 
             return belong;
         }
+
+        //checks if two triangles have common side
+        public static bool commonSide(Triangle t1, Triangle t2)
+        {
+            bool common = false;
+
+            if (t1.p1 == t2.p1 && t1.p2 == t2.p2 || t1.p1 == t2.p2 && t1.p2 == t2.p1 ||
+                t1.p1 == t2.p2 && t1.p2 == t2.p3 || t1.p1 == t2.p3 && t1.p2 == t2.p2 ||
+                t1.p1 == t2.p3 && t1.p2 == t2.p1 || t1.p1 == t2.p1 && t1.p2 == t2.p3 ||
+                t1.p2 == t2.p1 && t1.p3 == t2.p2 || t1.p2 == t2.p2 && t1.p3 == t2.p1 ||
+                t1.p2 == t2.p2 && t1.p3 == t2.p3 || t1.p2 == t2.p3 && t1.p3 == t2.p2 ||
+                t1.p2 == t2.p3 && t1.p3 == t2.p1 || t1.p2 == t2.p1 && t1.p3 == t2.p3 ||
+                t1.p3 == t2.p1 && t1.p1 == t2.p2 || t1.p3 == t2.p2 && t1.p1 == t2.p1 ||
+                t1.p3 == t2.p2 && t1.p1 == t2.p3 || t1.p3 == t2.p3 && t1.p1 == t2.p2 ||
+                t1.p3 == t2.p3 && t1.p1 == t2.p1 || t1.p3 == t2.p1 && t1.p1 == t2.p3)
+            {
+                common = true;
+            }
+
+            return common;
+        }
     }
 }
