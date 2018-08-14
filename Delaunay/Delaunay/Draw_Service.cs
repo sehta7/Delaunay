@@ -42,5 +42,15 @@ namespace Delaunay
             }
             pictureBox.Image = bitmap;
         }
+
+        //draw Voronoi diagram from given edges
+        public static void drawDiagram(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<Edge> list)
+        {
+            foreach (var edge in list)
+            {
+                graphics.DrawLine(new Pen(Color.Green), edge.p1, edge.p2);
+            }
+            pictureBox.Image = bitmap;
+        }
     }
 }
