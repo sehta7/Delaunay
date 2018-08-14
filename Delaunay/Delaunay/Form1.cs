@@ -52,6 +52,7 @@ namespace Delaunay
             pictureBox1.Image = null;
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             graphics = Graphics.FromImage(bitmap);
+            textBox1.Text = null;
         }
     }
 }
