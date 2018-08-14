@@ -59,46 +59,31 @@ namespace Delaunay
         public static bool isInsideCircle(PointF toCheck, Triangle triangle)
         {
             //finds bisectors of the sides of the triangle
-            //eqation of line for points p1 and p2
-            float a1 = (triangle.p1.Y - triangle.p2.Y) / (triangle.p1.X - triangle.p2.X);
-            float b1 = triangle.p1.Y - triangle.p1.X * a1;
-            //equation of bisector on p1p2
-            PointF p1Mid = new PointF(((triangle.p1.X + triangle.p2.X) * 0.5f), ((triangle.p1.Y + triangle.p2.Y) * 0.5f));
-            float a2 = -1 / a1;
-            float b2 = p1Mid.Y - p1Mid.X * a2;
+            float a1, b1;
+            findBisector(triangle.p1, triangle.p2, out a1, out b1);
 
-            //eqation of line for points p2 and p3
-            float a3 = (triangle.p2.Y - triangle.p3.Y) / (triangle.p2.X - triangle.p3.X);
-            float b3 = triangle.p2.Y - triangle.p2.X * a3;
-            //equation of bisector on p1p2
-            PointF p2Mid = new PointF(((triangle.p2.X + triangle.p3.X) * 0.5f), ((triangle.p2.Y + triangle.p3.Y) * 0.5f));
-            float a4 = -1 / a3;
-            float b4 = p2Mid.Y - p2Mid.X * a4;
+            float a2, b2;
+            findBisector(triangle.p2, triangle.p3, out a2, out b2);
 
-            //eqation of line for points p3 and p1
-            float a5 = (triangle.p3.Y - triangle.p1.Y) / (triangle.p3.X - triangle.p1.X);
-            float b5 = triangle.p3.Y - triangle.p3.X * a5;
-            //equation of bisector on p1p2
-            PointF p3Mid = new PointF(((triangle.p3.X + triangle.p1.X) * 0.5f), ((triangle.p3.Y + triangle.p1.Y) * 0.5f));
-            float a6 = -1 / a5;
-            float b6 = p3Mid.Y - p3Mid.X * a6;
+            float a3, b3;
+            findBisector(triangle.p3, triangle.p1, out a3, out b3);
 
             //coordinates of circle center (only when line are't parallel to axis)
             float x = 0, y = 0;
-            if (!float.IsInfinity(a2) && !float.IsInfinity(a4))
+            if (!float.IsInfinity(a1) && !float.IsInfinity(a2))
             {
-                x = (b4 - b2) / (a2 - a4);
+                x = (b2 - b1) / (a1 - a2);
+                y = a1 * x + b1;
+            }
+            else if (!float.IsInfinity(a2) && !float.IsInfinity(a3))
+            {
+                x = (b3 - b2) / (a2 - a3);
                 y = a2 * x + b2;
             }
-            else if (!float.IsInfinity(a4) && !float.IsInfinity(a6))
+            else if (!float.IsInfinity(a3) && !float.IsInfinity(a2))
             {
-                x = (b6 - b4) / (a4 - a6);
-                y = a4 * x + b4;
-            }
-            else if (!float.IsInfinity(a6) && !float.IsInfinity(a2))
-            {
-                x = (b2 - b6) / (a6 - a2);
-                y = a6 * x + b6;
+                x = (b2 - b3) / (a3 - a2);
+                y = a3 * x + b3;
             }
 
             //count the distance between circle center and point
@@ -120,6 +105,19 @@ namespace Delaunay
             {
                 return false;
             }
+        }
+
+        //count coefficients of bisector function
+        public static void findBisector(PointF p1, PointF p2, out float a2, out float b2)
+        {
+            //eqation of line for points p1 and p2
+            float a1 = (p1.Y - p2.Y) / (p1.X - p2.X);
+            float b1 = p1.Y - p1.X * a1;
+
+            //equation of bisector on p1p2
+            PointF mid = new PointF(((p1.X + p2.X) * 0.5f), ((p1.Y + p2.Y) * 0.5f));
+            a2 = -1 / a1;
+            b2 = mid.Y - mid.X * a2;
         }
     }
 }
