@@ -69,14 +69,14 @@ namespace Delaunay
                 edgeList = null;
             }
             
-            //remove triangles with vertices of super triangle
+            /*//remove triangles with vertices of super triangle
             for (int i = triangleList.Count - 1; i >= 0; i--)
             {
                 if (Triangle.belongsToSupertriangle(superTriangle, triangleList[i]))
                 {
                     triangleList.RemoveAt(i);
                 }
-            }
+            }*/
 
             return triangleList;
         }
