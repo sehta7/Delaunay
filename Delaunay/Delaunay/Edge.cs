@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Delaunay
 {
+    //class to store information about edges
     class Edge
     {
+        //points of edge
         public PointF p1;
         public PointF p2;
 
+        //constructors
         public Edge()
         {
 
