@@ -27,6 +27,7 @@ namespace Delaunay
         public float a3;
         public float b3;
 
+        //constructors
         public Triangle()
         {
 
