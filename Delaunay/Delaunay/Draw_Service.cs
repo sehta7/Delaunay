@@ -41,6 +41,7 @@ namespace Delaunay
                 graphics.DrawLine(new Pen(Color.Red), triangle.p3, triangle.p1);
             }
             pictureBox.Image = bitmap;
+            pictureBox.Refresh();
         }
 
         //draw Voronoi diagram from given edges
@@ -51,6 +52,7 @@ namespace Delaunay
                 graphics.DrawLine(new Pen(Color.Green), edge.p1, edge.p2);
             }
             pictureBox.Image = bitmap;
+            pictureBox.Refresh();
         }
     }
 }
