@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Delaunay
 {
@@ -31,6 +32,7 @@ namespace Delaunay
                 //check if point is inside the circumscribed circle on given triangle
                 for (int j = 0; j < triangleList.Count; j++)
                 {
+                    //if (Geometry_Service.inCircle(list[i], triangleList[j]))
                     if (Geometry_Service.isInsideCircle(list[i], triangleList[j]) == true)
                     {
                         //add three edges of triangle which has point inside and remove it from list of triangles
@@ -68,15 +70,15 @@ namespace Delaunay
                 edgeList.Clear();
                 edgeList = null;
             }
-            
-            /*//remove triangles with vertices of super triangle
+
+            //remove triangles with vertices of super triangle
             for (int i = triangleList.Count - 1; i >= 0; i--)
             {
-                if (Triangle.belongsToSupertriangle(superTriangle, triangleList[i]))
+                if (Triangle.belongsToSupertriangle(superTriangle, triangleList[i]) == true)
                 {
                     triangleList.RemoveAt(i);
                 }
-            }*/
+            }
 
             return triangleList;
         }
