@@ -44,7 +44,7 @@ namespace Delaunay
         private void button3_Click(object sender, EventArgs e)
         {
             triangleList = Delaunay_Service.BowyerWatsonAlgorithm(pointList);
-            VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList);
+            VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList, bitmap, graphics, pictureBox1);
             Draw_Service.drawDiagram(bitmap, graphics, pictureBox1, VoronoiDiagram);
         }
 
