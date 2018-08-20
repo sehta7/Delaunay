@@ -26,6 +26,26 @@ namespace Delaunay
                     }
                 }
             }
+
+            for (int j = edgeList.Count - 2; j >= 0; j--)
+            {
+                PointF zero = new PointF(0, 0);
+                if (edgeList[j].p1 == zero || edgeList[j].p2 == zero || edgeList[j].p1 == edgeList[j].p2)
+                {
+                    edgeList.RemoveAt(j);
+                    //j--;
+                }
+                for (int k = edgeList.Count - 1; k >= j + 1; k--)
+                {
+                    if (Edge.areTheSame(edgeList[j], edgeList[k]))
+                    {
+                        edgeList.RemoveAt(k);
+                        k--;
+                        continue;
+                    }
+                }
+            }
+
             return edgeList;
         }
     }
