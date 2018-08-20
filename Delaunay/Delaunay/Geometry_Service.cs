@@ -127,5 +127,60 @@ namespace Delaunay
             a2 = -1 / a1;
             b2 = mid.Y - mid.X * a2;
         }
+
+        public static bool inCircle(PointF p, Triangle t)
+        {
+            if (System.Math.Abs(t.p1.Y - t.p2.Y) < double.Epsilon && System.Math.Abs(t.p2.Y - t.p3.Y) < double.Epsilon)
+            {
+                //INCIRCUM - F - Points are coincident !!
+                return false;
+            }
+
+            float m1, m2;
+            float mx1, mx2;
+            float my1, my2;
+            float xc, yc;
+
+            if (System.Math.Abs(t.p2.Y - t.p1.Y) < double.Epsilon)
+            {
+                m2 = -(t.p3.X - t.p2.X) / (t.p3.Y - t.p2.Y);
+                mx2 = (t.p2.X + t.p3.X) * 0.5f;
+                my2 = (t.p2.Y + t.p3.Y) * 0.5f;
+                //Calculate CircumCircle center (xc,yc)
+                xc = (t.p2.X + t.p1.X) * 0.5f;
+                yc = m2 * (xc - mx2) + my2;
+            }
+            else if (System.Math.Abs(t.p3.Y - t.p2.Y) < double.Epsilon)
+            {
+                m1 = -(t.p2.X - t.p1.X) / (t.p2.Y - t.p1.Y);
+                mx1 = (t.p1.X + t.p2.X) * 0.5f;
+                my1 = (t.p1.Y + t.p2.Y) * 0.5f;
+                //Calculate CircumCircle center (xc,yc)
+                xc = (t.p3.X + t.p2.X) * 0.5f;
+                yc = m1 * (xc - mx1) + my1;
+            }
+            else
+            {
+                m1 = -(t.p2.X - t.p1.X) / (t.p2.Y - t.p1.Y);
+                m2 = -(t.p3.X - t.p2.X) / (t.p3.Y - t.p2.Y);
+                mx1 = (t.p1.X + t.p2.X) * 0.5f;
+                mx2 = (t.p2.X + t.p3.X) * 0.5f;
+                my1 = (t.p1.Y + t.p2.Y) * 0.5f;
+                my2 = (t.p2.Y + t.p3.Y) * 0.5f;
+                //Calculate CircumCircle center (xc,yc)
+                xc = (m1 * mx1 - m2 * mx2 + my2 - my1) / (m1 - m2);
+                yc = m1 * (xc - mx1) + my1;
+            }
+            t.circumcenter = new PointF(xc, yc);
+            double dx = t.p2.X - xc;
+            double dy = t.p2.Y - yc;
+            double rsqr = dx * dx + dy * dy;
+            //double r = Math.Sqrt(rsqr); //Circumcircle radius
+            dx = p.X - xc;
+            dy = p.Y - yc;
+            double drsqr = dx * dx + dy * dy;
+
+            return (drsqr <= rsqr);
+        }
     }
 }
