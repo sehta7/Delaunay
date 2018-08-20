@@ -55,6 +55,9 @@ namespace Delaunay
             bitmap = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             graphics = Graphics.FromImage(bitmap);
             textBox1.Text = null;
+            triangleList = new List<Triangle>();
+            pointList = new List<PointF>();
+            VoronoiDiagram = new List<Edge>();
         }
     }
 }
