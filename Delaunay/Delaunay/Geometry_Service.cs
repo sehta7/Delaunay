@@ -128,6 +128,44 @@ namespace Delaunay
             b2 = mid.Y - mid.X * a2;
         }
 
+        //count new coordinates of triangle vertex - Laplace smoothing
+        public static void movingTriangle(PointF point, List<Triangle> triangleList, ref float x, ref float y)
+        {
+            float xSum = 0;
+            float ySum = 0;
+            int vertex = 0;
+            int n = 0;
+
+            for (int i = 0; i < triangleList.Count; i++)
+            {
+                //looking for triangles with common vertex
+                if (Triangle.commonVertex(point, triangleList[i], ref vertex))
+                {
+                    if (vertex == 1)
+                    {
+                        xSum = triangleList[i].p2.X + +triangleList[i].p3.X;
+                        ySum = triangleList[i].p2.Y + +triangleList[i].p3.Y;
+                    }
+                    else if (vertex == 2)
+                    {
+                        xSum = triangleList[i].p1.X + +triangleList[i].p3.X;
+                        ySum = triangleList[i].p1.Y + +triangleList[i].p3.Y;
+                    }
+                    else if (vertex == 3)
+                    {
+                        xSum = triangleList[i].p1.X + +triangleList[i].p2.X;
+                        ySum = triangleList[i].p1.Y + +triangleList[i].p2.Y;
+                    }
+
+                    //count number of triangles
+                    n++;
+                }
+            }
+            //counting new coordinates
+            x = xSum / (n * 2);
+            y = ySum / (n * 2);
+        }
+
         public static bool inCircle(PointF p, Triangle t)
         {
             if (System.Math.Abs(t.p1.Y - t.p2.Y) < double.Epsilon && System.Math.Abs(t.p2.Y - t.p3.Y) < double.Epsilon)
