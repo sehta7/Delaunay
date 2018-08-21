@@ -38,6 +38,12 @@ namespace Delaunay
         {
             triangleList = Delaunay_Service.BowyerWatsonAlgorithm(pointList);
             Draw_Service.drawTriangle(bitmap, graphics, pictureBox1, triangleList);
+            //Laplace smoothing
+            if (checkBox1.Checked)
+            {
+                Laplace_Service.Laplace(triangleList);
+                Draw_Service.drawTriangle(bitmap, graphics, pictureBox1, triangleList);
+            }
         }
 
         //drawing Voronoi diagram
