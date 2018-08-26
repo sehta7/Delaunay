@@ -210,15 +210,26 @@ namespace Delaunay
                 yc = m1 * (xc - mx1) + my1;
             }
             t.circumcenter = new PointF(xc, yc);
-            double dx = t.p2.X - xc;
-            double dy = t.p2.Y - yc;
-            double rsqr = dx * dx + dy * dy;
-            //double r = Math.Sqrt(rsqr); //Circumcircle radius
-            dx = p.X - xc;
-            dy = p.Y - yc;
-            double drsqr = dx * dx + dy * dy;
+            //double dx = t.p2.X - xc;
+            //double dy = t.p2.Y - yc;
+            //double rsqr = dx * dx + dy * dy;
+            ////double r = Math.Sqrt(rsqr); //Circumcircle radius
+            //dx = p.X - xc;
+            //dy = p.Y - yc;
+            //double drsqr = dx * dx + dy * dy;
 
-            return (drsqr <= rsqr);
+            //count the distance between circle center and point
+            float d = (float)Math.Sqrt(Math.Pow((p.X - xc), 2) + Math.Pow((p.Y - yc), 2));
+            //coutn the radius of circle
+            float ab = (float)Math.Sqrt(Math.Pow((t.p1.X - t.p2.X), 2) + Math.Pow((t.p1.Y - t.p2.Y), 2));
+            float bc = (float)Math.Sqrt(Math.Pow((t.p2.X - t.p3.X), 2) + Math.Pow((t.p2.Y - t.p3.Y), 2));
+            float ca = (float)Math.Sqrt(Math.Pow((t.p3.X - t.p1.X), 2) + Math.Pow((t.p3.Y - t.p1.Y), 2));
+            float circuit = (ab + bc + ca) / 2;
+            float area = (float)Math.Sqrt(circuit * (circuit - ab) * (circuit - bc) * (circuit - ca));
+            float r = (ab * bc * ca) / (4 * area);
+
+            return (d <= r);
+            //return (drsqr <= rsqr);
         }
     }
 }
