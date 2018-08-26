@@ -32,8 +32,8 @@ namespace Delaunay
                 //check if point is inside the circumscribed circle on given triangle
                 for (int j = 0; j < triangleList.Count; j++)
                 {
-                    //if (Geometry_Service.inCircle(list[i], triangleList[j]))
-                    if (Geometry_Service.isInsideCircle(list[i], triangleList[j]) == true)
+                    if (Geometry_Service.inCircle(list[i], triangleList[j]))
+                    //if (Geometry_Service.isInsideCircle(list[i], triangleList[j]) == true)
                     {
                         //add three edges of triangle which has point inside and remove it from list of triangles
                         edgeList.Add(new Edge(triangleList[j].p1, triangleList[j].p2));
