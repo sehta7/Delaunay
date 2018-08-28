@@ -82,28 +82,19 @@ namespace Delaunay
             return common;
         }
 
-        //checks if two triangles have common vertex
-        public static bool commonVertex(PointF vertex, Triangle triangle, ref int common)
+        //checks if triangle has common vertex with given point
+        public bool commonVertex(PointF point)
         {
-            bool belong = false;
+            bool common = false;
 
-            if (vertex.Equals(triangle.p1))
+            if (point.Equals(this.p1) ||
+                point.Equals(this.p2) ||
+                point.Equals(this.p3))
             {
-                common = 1;
-                belong = true;
-            }
-            else if (vertex.Equals(triangle.p2))
-            {
-                common = 2;
-                belong = true;
-            }
-            else if (vertex.Equals(triangle.p3))
-            {
-                common = 3;
-                belong = true;
+                common = true;
             }
 
-            return belong;
+            return common;
         }
     }
 }
