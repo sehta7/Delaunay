@@ -10,30 +10,46 @@ namespace Delaunay
     class Laplace_Service
     {
         //move vertices of triangles to smooth grid
-        public static List<Triangle> Laplace(List<Triangle> triangleList)
+        public static List<PointF> Laplace(List<Triangle> triangleList, List<PointF> pointList)
         {
-            foreach (var triangle in triangleList)
+            //list of points to return
+            List<PointF> list = new List<PointF>();
+
+            //check every point
+            foreach (var point in pointList)
             {
-                //new coordinates of triangle vertex
-                float x = 0, y = 0;
+                int n = 0;
+                float sumX = 0;
+                float sumY = 0;
 
-                //first vertex of triangle
-                Geometry_Service.movingTriangle(triangle.p1, triangleList, ref x, ref y);
-                triangle.p1.X = x;
-                triangle.p1.Y = y;
+                for (int i = 0; i < triangleList.Count; i++)
+                {
+                    //if triangle has common vertex with point nedd to count coordinates sum
+                    if (triangleList[i].commonVertex(point))
+                    {
+                        n++;
+                        sumX += triangleList[i].p1.X + triangleList[i].p2.X + triangleList[i].p3.X - point.X;
+                        sumY += triangleList[i].p1.Y + triangleList[i].p2.Y + triangleList[i].p3.Y - point.Y;
+                    }
+                }
 
-                //first vertex of triangle
-                Geometry_Service.movingTriangle(triangle.p2, triangleList, ref x, ref y);
-                triangle.p2.X = x;
-                triangle.p2.Y = y;
-
-                //first vertex of triangle
-                Geometry_Service.movingTriangle(triangle.p3, triangleList, ref x, ref y);
-                triangle.p3.X = x;
-                triangle.p3.Y = y;
+                //if point has more common triangles than 3 its not on the border
+                if (n > 3)
+                {
+                    //count the average
+                    //multiple by 2 because every triangle vertices was counted twice
+                    float x = sumX / (2 * n);
+                    float y = sumY / (2 * n);
+                    PointF toChange = new PointF(x, y);
+                    list.Add(toChange);
+                }
+                else
+                {
+                    list.Add(point);
+                }
             }
 
-            return triangleList;
+            return list;
         }
     }
 }
