@@ -10,6 +10,15 @@ namespace Delaunay
 {
     class Draw_Service
     {
+        public static void drawPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<PointF> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                graphics.DrawRectangle(new Pen(Color.Black), list[i].X, list[i].Y, 2, 2);
+            }
+            pictureBox.Image = bitmap;
+        }
+
         //method to draw points
         public static List<PointF> drawRandomPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, int numberOfPoints, int width, int height)
         {
@@ -39,6 +48,8 @@ namespace Delaunay
                 graphics.DrawLine(new Pen(Color.Red), triangle.p1, triangle.p2);
                 graphics.DrawLine(new Pen(Color.Red), triangle.p2, triangle.p3);
                 graphics.DrawLine(new Pen(Color.Red), triangle.p3, triangle.p1);
+                pictureBox.Image = bitmap;
+                pictureBox.Refresh();
             }
             pictureBox.Image = bitmap;
             pictureBox.Refresh();
