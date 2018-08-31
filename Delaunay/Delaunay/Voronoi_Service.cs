@@ -12,7 +12,7 @@ namespace Delaunay
     {
         //method to get Voronoi diagram from Delaunay Triangulation
         //returns bisectors of triangles which have circumcenter
-        public static List<Edge> DelaunayToVoronoi(List<Triangle> trianglesList, Bitmap bitmap, Graphics graphics, PictureBox pictureBox)
+        public static List<Edge> DelaunayToVoronoi(List<Triangle> trianglesList)
         {
             //list of Voronoi diagram edges
             List<Edge> edgeList = new List<Edge>();
@@ -26,7 +26,6 @@ namespace Delaunay
                         edgeList.Add(new Edge(triangle.circumcenter, trianglesList[i].circumcenter));
                     }
                 }
-                Draw_Service.drawDiagram(bitmap, graphics, pictureBox, edgeList);
             }
 
             for (int j = edgeList.Count - 2; j >= 0; j--)

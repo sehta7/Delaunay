@@ -91,6 +91,7 @@ namespace Delaunay
                 x = (b2 - b3) / (a3 - a2);
                 y = a3 * x + b3;
             }
+
             triangle.circumcenter.X = x;
             triangle.circumcenter.Y = y;
 
@@ -105,7 +106,7 @@ namespace Delaunay
             float r = (ab * bc * ca) / (4 * area);
 
             //check if point is inside the circle with center in (x,y)
-            if (d < r)
+            if (d <= r)
             {
                 return true;
             }
@@ -126,44 +127,6 @@ namespace Delaunay
             PointF mid = new PointF(((p1.X + p2.X) * 0.5f), ((p1.Y + p2.Y) * 0.5f));
             a2 = -1 / a1;
             b2 = mid.Y - mid.X * a2;
-        }
-
-        //count new coordinates of triangle vertex - Laplace smoothing
-        public static void movingTriangle(PointF point, List<Triangle> triangleList, ref float x, ref float y)
-        {
-            float xSum = 0;
-            float ySum = 0;
-            int vertex = 0;
-            int n = 0;
-
-            for (int i = 0; i < triangleList.Count; i++)
-            {
-                //looking for triangles with common vertex
-                if (Triangle.commonVertex(point, triangleList[i], ref vertex))
-                {
-                    if (vertex == 1)
-                    {
-                        xSum = triangleList[i].p2.X + +triangleList[i].p3.X;
-                        ySum = triangleList[i].p2.Y + +triangleList[i].p3.Y;
-                    }
-                    else if (vertex == 2)
-                    {
-                        xSum = triangleList[i].p1.X + +triangleList[i].p3.X;
-                        ySum = triangleList[i].p1.Y + +triangleList[i].p3.Y;
-                    }
-                    else if (vertex == 3)
-                    {
-                        xSum = triangleList[i].p1.X + +triangleList[i].p2.X;
-                        ySum = triangleList[i].p1.Y + +triangleList[i].p2.Y;
-                    }
-
-                    //count number of triangles
-                    n++;
-                }
-            }
-            //counting new coordinates
-            x = xSum / (n * 2);
-            y = ySum / (n * 2);
         }
 
         public static bool inCircle(PointF p, Triangle t)

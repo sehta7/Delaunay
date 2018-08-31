@@ -10,6 +10,7 @@ namespace Delaunay
 {
     class Draw_Service
     {
+        //method to draw points with given coordinates
         public static void drawPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<PointF> list)
         {
             for (int i = 0; i < list.Count; i++)

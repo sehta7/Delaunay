@@ -41,8 +41,19 @@ namespace Delaunay
             //Laplace smoothing
             if (checkBox1.Checked)
             {
-                Laplace_Service.Laplace(triangleList);
-                Draw_Service.drawTriangle(bitmap, graphics, pictureBox1, triangleList);
+                System.Threading.Thread.Sleep(3000);
+                //remove vertices of supertriangle from list
+                pointList.RemoveAt(pointList.Count - 1);
+                pointList.RemoveAt(pointList.Count - 1);
+                pointList.RemoveAt(pointList.Count - 1);
+                List<PointF> laplacePoints = new List<PointF>();
+                List<Triangle> smoothTriangles = new List<Triangle>();
+                laplacePoints = Laplace_Service.Laplace(triangleList, pointList);
+                smoothTriangles = Delaunay_Service.BowyerWatsonAlgorithm(laplacePoints);
+                Bitmap bitmap2 = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+                graphics = Graphics.FromImage(bitmap2);
+                Draw_Service.drawPoints(bitmap2, graphics, pictureBox1, laplacePoints);
+                Draw_Service.drawTriangle(bitmap2, graphics, pictureBox1, smoothTriangles);
             }
         }
 
@@ -50,8 +61,24 @@ namespace Delaunay
         private void button3_Click(object sender, EventArgs e)
         {
             triangleList = Delaunay_Service.BowyerWatsonAlgorithm(pointList);
-            VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList, bitmap, graphics, pictureBox1);
+            triangleList = Delaunay_Service.BowyerWatsonAlgorithm(pointList);
+            VoronoiDiagram = Voronoi_Service.DelaunayToVoronoi(triangleList);
             Draw_Service.drawDiagram(bitmap, graphics, pictureBox1, VoronoiDiagram);
+            //Laplace smoothing
+            if (checkBox1.Checked)
+            {
+                System.Threading.Thread.Sleep(3000);
+                List<PointF> laplacePoints = new List<PointF>();
+                List<Triangle> smoothTriangles = new List<Triangle>();
+                laplacePoints = Laplace_Service.Laplace(triangleList, pointList);
+                smoothTriangles = Delaunay_Service.BowyerWatsonAlgorithm(laplacePoints);
+                Bitmap bitmap2 = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+                graphics = Graphics.FromImage(bitmap2);
+                List<Edge> laplaceEdges = new List<Edge>();
+                laplaceEdges = Voronoi_Service.DelaunayToVoronoi(smoothTriangles);
+                Draw_Service.drawPoints(bitmap2, graphics, pictureBox1, laplacePoints);
+                Draw_Service.drawDiagram(bitmap2, graphics, pictureBox1, laplaceEdges);
+            }
         }
 
         //clear button
@@ -64,6 +91,7 @@ namespace Delaunay
             triangleList = new List<Triangle>();
             pointList = new List<PointF>();
             VoronoiDiagram = new List<Edge>();
+            checkBox1.Checked = false;
         }
     }
 }
