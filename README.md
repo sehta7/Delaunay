@@ -7,6 +7,7 @@ Program has two main functions:
 
 - make Delaunay teselation
 
+
 - make Voronoi diagram
 
 There is option to join this two options. Additionally we can use Laplace smoothing to get more regular grid.
