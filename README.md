@@ -12,7 +12,9 @@ Program has two main functions:
 There is option to join this two options. Additionally we can use Laplace smoothing to get more regular grid.
 
 Delaunay teselation:
+
 ![del](https://user-images.githubusercontent.com/29467813/46068818-515cb080-c17a-11e8-8b3f-a338cd8e8117.png)
 
 Voronoi diagram:
 
+![vor](https://user-images.githubusercontent.com/29467813/46068920-9385f200-c17a-11e8-83b0-8dd298d9d497.PNG)
