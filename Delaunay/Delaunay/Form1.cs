@@ -93,5 +93,11 @@ namespace Delaunay
             VoronoiDiagram = new List<Edge>();
             checkBox1.Checked = false;
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form Form3D = new Model3D.Form3D();
+            Form3D.Show();
+        }
     }
 }
