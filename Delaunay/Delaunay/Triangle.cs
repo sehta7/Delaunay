@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delaunay.Model3D;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -95,6 +96,102 @@ namespace Delaunay
             }
 
             return common;
+        }
+
+        public void convertXY(List<PointF> list2d, List<Vector3D> list3d)
+        {
+            for (int i = 0; i < list3d.Count; i++)
+            {
+                if (this.p1.X == list3d[i].x && this.p1.Y == list3d[i].y)
+                {
+                    this.p1.X = list2d[i].X;
+                    this.p1.Y = list2d[i].Y;
+                }
+
+                if (this.p2.X == list3d[i].x && this.p2.Y == list3d[i].y)
+                {
+                    this.p2.X = list2d[i].X;
+                    this.p2.Y = list2d[i].Y;
+                }
+
+                if (this.p3.X == list3d[i].x && this.p3.Y == list3d[i].y)
+                {
+                    this.p3.X = list2d[i].X;
+                    this.p3.Y = list2d[i].Y;
+                }
+            }
+
+        }
+
+        public void convertYZ(List<PointF> list2d, List<Vector3D> list3d)
+        {
+            for (int i = 0; i < list3d.Count; i++)
+            {
+                if (this.p1.X == list3d[i].y && this.p1.Y == list3d[i].z)
+                {
+                    this.p1.X = list2d[i].X;
+                    this.p1.Y = list2d[i].Y;
+                }
+
+                if (this.p2.X == list3d[i].y && this.p2.Y == list3d[i].z)
+                {
+                    this.p2.X = list2d[i].X;
+                    this.p2.Y = list2d[i].Y;
+                }
+
+                if (this.p3.X == list3d[i].y && this.p3.Y == list3d[i].z)
+                {
+                    this.p3.X = list2d[i].X;
+                    this.p3.Y = list2d[i].Y;
+                }
+            }
+
+        }
+
+        public void convertZX(List<PointF> list2d, List<Vector3D> list3d)
+        {
+            for (int i = 0; i < list3d.Count; i++)
+            {
+                if (this.p1.X == list3d[i].z && this.p1.Y == list3d[i].x)
+                {
+                    this.p1.X = list2d[i].X;
+                    this.p1.Y = list2d[i].Y;
+                }
+
+                if (this.p2.X == list3d[i].z && this.p2.Y == list3d[i].x)
+                {
+                    this.p2.X = list2d[i].X;
+                    this.p2.Y = list2d[i].Y;
+                }
+
+                if (this.p3.X == list3d[i].z && this.p3.Y == list3d[i].x)
+                {
+                    this.p3.X = list2d[i].X;
+                    this.p3.Y = list2d[i].Y;
+                }
+            }
+
+        }
+
+        public void convert(PointF temp, PointF current)
+        {
+            if (this.p1.X == temp.X && this.p1.Y == temp.Y)
+            {
+                this.p1.X = current.X;
+                this.p1.Y = current.Y;
+            }
+
+            if (this.p2.X == temp.X && this.p2.Y == temp.Y)
+            {
+                this.p2.X = current.X;
+                this.p2.Y = current.Y;
+            }
+
+            if (this.p3.X == temp.X && this.p3.Y == temp.Y)
+            {
+                this.p3.X = current.X;
+                this.p3.Y = current.Y;
+            }
         }
     }
 }
