@@ -10,6 +10,7 @@ namespace Delaunay.Model3D
 {
     class Drawing_Service
     {
+
         public static Bitmap DrawAxis(Graphics graphics, Bitmap bitmap, PointF start)
         {
 
@@ -20,25 +21,33 @@ namespace Delaunay.Model3D
             return bitmap;
         }
 
-        public static List<Vector3D> randomPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, int numberOfPoints, int width, int height, int depth)
+        public static List<Vector3D> randomPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, int numberOfPoints, int minX, int maxX, int minY, int maxY, int minZ, int maxZ, PointF center, Camera camera, float zoom, PointF drawCenter)
         {
             List<Vector3D> list = new List<Vector3D>();
+            List<PointF> list2d = new List<PointF>();
             Random random = new Random();
 
             //finds coordinates of all points
             for (int i = 0; i < numberOfPoints; i++)
             {
-                int x = random.Next(0, width);
-                int y = random.Next(0, height);
-                int z = random.Next(0, depth);
+                int x = random.Next(minX, maxX);
+                int y = random.Next(minY, maxY);
+                int z = random.Next(minZ, maxZ);
+                Vector3D point3d = new Vector3D(x, y, z);
                 list.Add(new Vector3D(x, y, z));
-
-                //graphics.DrawRectangle(new Pen(Color.Black), x, y, 3, 3);
             }
-            //pictureBox.Image = bitmap;
 
             //return list of poitns
             return list;
+        }
+
+        public static void drawPoints(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<PointF> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                graphics.DrawRectangle(new Pen(Color.Black), list[i].X, list[i].Y, 3, 3);
+            }
+            pictureBox.Image = bitmap;
         }
 
         public static Bitmap drawingCube(Cube cube, Graphics graphics, Bitmap bitmap)
