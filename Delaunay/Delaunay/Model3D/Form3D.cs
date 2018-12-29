@@ -21,6 +21,10 @@ namespace Delaunay.Model3D
         List<Triangle> trianglesXY;
         List<Triangle> trianglesYZ;
         List<Triangle> trianglesZX;
+        List<Edge> edgesXY;
+        List<Edge> edgesYZ;
+        List<Edge> edgesZX;
+        List<Tetrahedra> tetrahedras;
 
         public Form3D()
         {
@@ -33,18 +37,18 @@ namespace Delaunay.Model3D
 
         private void Form3D_Paint(object sender, PaintEventArgs e)
         {
-            zoom = (float)Screen.PrimaryScreen.Bounds.Width / 1.5f;
+            //zoom = (float)Screen.PrimaryScreen.Bounds.Width / 1.5f;
 
-            if (cube == null)
-            {
+            //if (cube == null)
+            //{
                 cube = new Cube();
                 cube.InitializeCube(400, 200, 250);
-                Camera camera = new Camera(cube.center.x, cube.center.z, ((cube.center.x * zoom) / cube.center.x));
+            //    Camera camera = new Camera(cube.center.x, cube.center.z, ((cube.center.x * zoom) / cube.center.x));
 
-                cube.count2D(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    cube.count2D(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
 
-                pictureBox1.Image = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
-            }
+            //    pictureBox1.Image = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -53,11 +57,11 @@ namespace Delaunay.Model3D
             int minX, maxX, minY, maxY, minZ, maxZ;
 
             minX = 50;
-            maxX = 350;
+            maxX = 550;
             minY = 50;
-            maxY = 150;
+            maxY = 250;
             minZ = 50;
-            maxZ = 200;
+            maxZ = 400;
             Camera camera = new Camera(cube.center.x, cube.center.z, ((cube.center.x * zoom) / cube.center.x));
             points3d = Drawing_Service.randomPoints(bitmap3d, graphics3d, pictureBox1, Int32.Parse(textBox1.Text), minX, maxX, minY, maxY, minZ, maxZ, new PointF(pictureBox1.Size.Width/2, pictureBox1.Size.Height/2), camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
             for (int i = 0; i < points3d.Count; i++)
@@ -109,7 +113,7 @@ namespace Delaunay.Model3D
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesYZ);
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesZX);
 
-            bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
+            //bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
             Drawing_Service.drawPoints(bitmap3d, graphics3d, pictureBox1, points2d);
             pictureBox1.Image = bitmap3d;
             pictureBox1.Refresh();
@@ -157,7 +161,7 @@ namespace Delaunay.Model3D
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesYZ);
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesZX);
 
-            bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
+            //bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
             Drawing_Service.drawPoints(bitmap3d, graphics3d, pictureBox1, points2d);
             pictureBox1.Image = bitmap3d;
             pictureBox1.Refresh();
@@ -205,7 +209,7 @@ namespace Delaunay.Model3D
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesYZ);
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesZX);
 
-            bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
+            //bitmap3d = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
             Drawing_Service.drawPoints(bitmap3d, graphics3d, pictureBox1, points2d);
             pictureBox1.Image = bitmap3d;
             pictureBox1.Refresh();
@@ -223,7 +227,7 @@ namespace Delaunay.Model3D
             cube = new Cube();
             cube.InitializeCube(400, 200, 250);
             cube.count2D(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
-            pictureBox1.Image = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
+            //pictureBox1.Image = Drawing_Service.drawingCube(cube, graphics3d, bitmap3d);
 
             points2d = null;
             points3d = null;
@@ -277,6 +281,90 @@ namespace Delaunay.Model3D
                 triangle.convertZX(points2d, points3d);
             }
             Draw_Service.drawTriangle(bitmap3d, graphics3d, pictureBox1, trianglesZX);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Camera camera = new Camera(cube.center.x, cube.center.z, ((cube.center.x * zoom) / cube.center.x));
+
+            tetrahedras = Delaunay_3d.BowyerWatsonAlgorithm(points3d);
+            for (int i = 0; i < tetrahedras.Count; i++)
+            {
+                tetrahedras[i].convert3dTo2d(camera, zoom, pictureBox1);
+            }
+            Drawing_Service.drawDiagram(bitmap3d, graphics3d, pictureBox1, tetrahedras);
+            //List<PointF> pointsXY = new List<PointF>();
+            //List<PointF> pointsYZ = new List<PointF>();
+            //List<PointF> pointsZX = new List<PointF>();
+            //foreach (var point in points3d)
+            //{
+            //    //xy axis
+            //    Vector3D vector3D = new Vector3D(point.x, point.y, 0);
+            //    //PointF pointXY = vector3D.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    PointF pointXY = new PointF(point.x, point.y);
+            //    pointsXY.Add(pointXY);
+
+            //    //yz axis
+            //    vector3D = new Vector3D(point.y, point.z, 0);
+            //    //PointF pointYZ = vector3D.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    PointF pointYZ = new PointF(point.y, point.z);
+            //    pointsYZ.Add(pointYZ);
+
+            //    //zx axis
+            //    vector3D = new Vector3D(point.z, point.x, 0);
+            //    //PointF pointZX = vector3D.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    PointF pointZX = new PointF(point.z, point.x);
+            //    pointsZX.Add(pointZX);
+            //}
+
+            //trianglesXY = Delaunay_Service.BowyerWatsonAlgorithm(pointsXY);
+            ////foreach (var triangle in trianglesXY)
+            ////{
+            ////    triangle.convertXY(points2d, points3d);
+            ////}
+
+            //trianglesYZ = Delaunay_Service.BowyerWatsonAlgorithm(pointsYZ);
+            ////foreach (var triangle in trianglesYZ)
+            ////{
+            ////    triangle.convertYZ(points2d, points3d);
+            ////}
+
+            //trianglesZX = Delaunay_Service.BowyerWatsonAlgorithm(pointsZX);
+            ////foreach (var triangle in trianglesZX)
+            ////{
+            ////    triangle.convertZX(points2d, points3d);
+            ////}
+
+            //edgesXY = Voronoi_Service.DelaunayToVoronoi(trianglesXY);
+            //foreach (var edge in edgesXY)
+            //{
+            //    Vector3D vector1 = new Vector3D(edge.p1.X, edge.p1.Y, 0);
+            //    Vector3D vector2 = new Vector3D(edge.p2.X, edge.p2.Y, 0);
+            //    edge.p1 = vector1.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    edge.p2 = vector2.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //}
+            //edgesYZ = Voronoi_Service.DelaunayToVoronoi(trianglesYZ);
+            //foreach (var edge in edgesYZ)
+            //{
+            //    Vector3D vector1 = new Vector3D(0, edge.p1.Y, edge.p1.X);
+            //    Vector3D vector2 = new Vector3D(0, edge.p2.Y, edge.p2.X);
+            //    edge.p1 = vector1.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    edge.p2 = vector2.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //}
+            //edgesZX = Voronoi_Service.DelaunayToVoronoi(trianglesZX);
+            //foreach (var edge in edgesZX)
+            //{
+            //    Vector3D vector1 = new Vector3D(edge.p1.X, 0, edge.p1.Y);
+            //    Vector3D vector2 = new Vector3D(edge.p2.X, 0, edge.p2.Y);
+            //    edge.p1 = vector1.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //    edge.p2 = vector2.Count2d(camera, zoom, new PointF(pictureBox1.Size.Width / 2, pictureBox1.Size.Height / 2));
+            //}
+
+            //Draw_Service.drawDiagram(bitmap3d, graphics3d, pictureBox1, edgesXY);
+            //Draw_Service.drawDiagram(bitmap3d, graphics3d, pictureBox1, edgesYZ);
+            //Draw_Service.drawDiagram(bitmap3d, graphics3d, pictureBox1, edgesZX);
+
+
         }
     }
 }

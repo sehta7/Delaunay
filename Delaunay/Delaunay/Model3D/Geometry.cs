@@ -69,5 +69,88 @@ namespace Delaunay.Model3D
         {
             return Convert.ToSingle(-(Math.Pow(a, 2) + Math.Pow(b, 2) + Math.Pow(c, 2)));
         }
+
+        public static Tetrahedra superTetrahedra(List<Vector3D> list)
+        {
+            float xmin = list[0].x;
+            float ymin = list[0].y;
+            float zmin = list[0].z;
+            float xmax = xmin;
+            float ymax = ymin;
+            float zmax = zmin;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (xmin > list[i].x)
+                {
+                    xmin = list[i].x;
+                }
+
+                if (ymin > list[i].y)
+                {
+                    ymin = list[i].y;
+                }
+
+                if (zmin > list[i].z)
+                {
+                    zmin = list[i].z;
+                }
+
+                if (xmax < list[i].x)
+                {
+                    xmax = list[i].x;
+                }
+
+                if (ymax < list[i].y)
+                {
+                    ymax = list[i].y;
+                }
+
+                if (zmax < list[i].z)
+                {
+                    zmax = list[i].z;
+                }
+            }
+
+            float xd = xmax - xmin;
+            float yd = ymax - ymin;
+            float zd = zmax - zmin;
+            float maxd;
+            if (xd > yd)
+            {
+                if (xd > zd)
+                {
+                    maxd = xd;
+                }
+                else
+                {
+                    maxd = zd;
+                }
+            }
+            else
+            {
+                if (yd > zd)
+                {
+                    maxd = yd;
+                }
+                else
+                {
+                    maxd = zd;
+                }
+            }
+
+            float xmid = (xmin + xmax) * 0.5f;
+            float ymid = (ymin + ymax) * 0.5f;
+            float zmid = (zmin + zmax) * 0.5f;
+
+            Vector3D p1 = new Vector3D((xmid - 2 * maxd), (ymid - maxd), (zmid - 2 * maxd));
+            Vector3D p2 = new Vector3D(xmid, (ymid + 2 * maxd), zmid);
+            Vector3D p3 = new Vector3D((xmid + 2 * maxd), (ymid - maxd), (zmid - 2 * maxd));
+            Vector3D p4 = new Vector3D((p1.x + p3.x) / 2, (ymid - maxd), (zmid + 2 * maxd));
+
+            Tetrahedra superTetrahedra = new Tetrahedra(p1, p2, p3, p4);
+
+            return superTetrahedra;
+        }
     }
 }

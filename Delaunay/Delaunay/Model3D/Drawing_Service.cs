@@ -50,6 +50,25 @@ namespace Delaunay.Model3D
             pictureBox.Image = bitmap;
         }
 
+        public static void drawDiagram(Bitmap bitmap, Graphics graphics, PictureBox pictureBox, List<Tetrahedra> list)
+        {
+            Random rnd = new Random();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Pen pen = new Pen(Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256)));
+
+                graphics.DrawLine(pen, list[i].p1_2d, list[i].p2_2d);
+                graphics.DrawLine(pen, list[i].p2_2d, list[i].p4_2d);
+                graphics.DrawLine(pen, list[i].p4_2d, list[i].p1_2d);
+                graphics.DrawLine(pen, list[i].p1_2d, list[i].p3_2d);
+                graphics.DrawLine(pen, list[i].p4_2d, list[i].p3_2d);
+                graphics.DrawLine(pen, list[i].p2_2d, list[i].p3_2d);
+            }
+            pictureBox.Image = bitmap;
+            pictureBox.Refresh();
+        }
+
         public static Bitmap drawingCube(Cube cube, Graphics graphics, Bitmap bitmap)
         {
             Pen pen = new Pen(Color.Black);

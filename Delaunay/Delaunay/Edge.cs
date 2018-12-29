@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delaunay.Model3D;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -38,5 +39,30 @@ namespace Delaunay
 
             return same;
         }
+
+        //public void convertXY(List<PointF> list2d, List<Vector3D> list3d)
+        //{
+        //    for (int i = 0; i < list3d.Count; i++)
+        //    {
+        //        if (this.p1.X == list3d[i].x && this.p1.Y == list3d[i].y)
+        //        {
+        //            this.p1.X = list2d[i].X;
+        //            this.p1.Y = list2d[i].Y;
+        //        }
+
+        //        if (this.p2.X == list3d[i].x && this.p2.Y == list3d[i].y)
+        //        {
+        //            this.p2.X = list2d[i].X;
+        //            this.p2.Y = list2d[i].Y;
+        //        }
+
+        //        if (this.p3.X == list3d[i].x && this.p3.Y == list3d[i].y)
+        //        {
+        //            this.p3.X = list2d[i].X;
+        //            this.p3.Y = list2d[i].Y;
+        //        }
+        //    }
+
+        //}
     }
 }
